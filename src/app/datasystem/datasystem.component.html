@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Information</title>
+</head>
+<body>
+  <h2>Employee Information</h2>
+  <form #employeeForm="ngForm" (ngSubmit)="submitForm(employeeForm)">
+    <label for="Name">Name:</label>
+    <input type="text" name="Name" [(ngModel)]="Name" required minlength="2" maxlength="50" pattern="^[a-zA-Z\s]*$" />
+    <div *ngIf="employeeForm.submitted && !Name" class="error-message">
+      Name is required.
+    </div>
+    <div *ngIf="employeeForm.submitted && Name && !Name.match('^[a-zA-Z\s]*$')" class="error-message">
+      Name should only contain characters.
+    </div>
+    <div *ngIf="employeeForm.submitted && (Name && (Name.length < 2 || Name.length > 50))" class="error-message">
+      Name should be between 2 and 50 characters.
+    </div>
+
+    <label for="EmpID">EmpID:</label>
+    <input type="number" name="EmpID" [(ngModel)]="EmpID" required min="1" />
+    <div *ngIf="employeeForm.submitted && !EmpID" class="error-message">
+      EmpID is required.
+    </div>
+    <div *ngIf="employeeForm.submitted && EmpID && EmpID < 1" class="error-message">
+      EmpID must be a positive number.
+    </div>
+
+    <label for="MobileNO">MobileNO:</label>
+    <input type="number" name="MobileNo" [(ngModel)]="MobileNO" required min="1000000000" max="9999999999" />
+    <div *ngIf="employeeForm.submitted && !MobileNO" class="error-message">
+      MobileNO is required.
+    </div>
+    <div *ngIf="employeeForm.submitted && (MobileNO && (MobileNO < 1000000000 || MobileNO > 9999999999))" class="error-message">
+      MobileNO must be a 10-digit number.
+    </div>
+
+    <label for="JoiningDate">Joining Date:</label>
+    <input type="date" name="JoiningDate" [(ngModel)]="JoiningDate" required pattern="\d{2}-\d{2}-\d{4}" />
+    <div *ngIf="employeeForm.submitted && !JoiningDate" class="error-message">
+      Joining Date is required.
+    </div>
+
+    <label for="Location">Location:</label>
+    <select name="Location" [(ngModel)]="Location" id="Location" class="input-field" required>
+      <option value="" disabled>Select Location</option>
+      <option value="MI">Mumbai</option>
+      <option value="MGR">Chennai</option>
+      <option value="BLR">Bangalore</option>
+      <option value="hyd">Hyderabad</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Pune">Pune</option>
+    </select>
+    <!-- Validation messages for Location -->
+    <div *ngIf="employeeForm.submitted && !Location" class="error-message">
+      Location is required.
+    </div>
+  <br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>EmpID</th>
+      <th>MobileNO</th>
+      <th>Joining Date</th>
+      <th>Location</th>
+    </tr>
+    <tr>
+      <td>{{ Name }}</td>
+      <td>{{ EmpID }}</td>
+      <td>{{ MobileNO }}</td>
+      <td>{{ JoiningDate }}</td>
+      <td>{{ Location }}</td>
+    </tr>
+  </table>
+</body>
+</html>

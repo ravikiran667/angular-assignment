@@ -1,0 +1,40 @@
+<h2>Project Information</h2>
+  <form #projectForm="ngForm" (ngSubmit)="submitForm(projectForm)">
+    <label for="ProjectName">Project Name:</label>
+    <input type="text" name="ProjectName" [(ngModel)]="ProjectName" required minlength="2" maxlength="50" />
+
+    <div *ngIf="projectForm.submitted && !ProjectName" class="error-message">
+      Project Name is required.
+    </div>
+    <div *ngIf="projectForm.submitted && (ProjectName && (ProjectName.length < 2 || ProjectName.length > 50))" class="error-message">
+      Project Name should be between 2 and 50 characters.
+    </div>
+
+    <label for="StartDate">Start Date:</label>
+    <input type="date" name="StartDate" [(ngModel)]="StartDate" required />
+
+    <label for="EndDate">End Date:</label>
+    <input type="date" name="EndDate" [(ngModel)]="EndDate" required />
+
+    <div *ngIf="projectForm.submitted && (!StartDate || !EndDate)" class="error-message">
+      Start Date and End Date are required.
+    </div>
+    <div *ngIf="projectForm.submitted && (StartDate && EndDate && (StartDate > EndDate))" class="error-message">
+      End Date should be after Start Date.
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <table>
+    <tr>
+      <th>Project Name</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+    <tr>
+      <td>{{ ProjectName }}</td>
+      <td>{{ StartDate }}</td>
+      <td>{{ EndDate }}</td>
+    </tr>
+  </table>
